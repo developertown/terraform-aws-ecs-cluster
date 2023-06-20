@@ -20,16 +20,14 @@ func TestECSCompleteValidation(t *testing.T) {
 	rootFolder := "../../"
 	randID := strings.ToLower(random.UniqueId())
 	terraformFolderRelativeToRoot := "examples/complete"
-	varFiles := []string{"fixtures.us-east-2.tfvars"}
 
 	tempTestFolder := testStructure.CopyTerraformFolderToTemp(t, rootFolder, terraformFolderRelativeToRoot)
 
 	terraformOptions := &terraform.Options{
 		// The path to where our Terraform code is located
-		TerraformDir: tempTestFolder,
-		Upgrade:      true,
-		// Variables to pass to our Terraform code using -var-file options
-		VarFiles: varFiles,
+		TerraformDir:    tempTestFolder,
+		Upgrade:         true,
+		TerraformBinary: "terragrunt",
 		Vars: map[string]interface{}{
 			"enabled": "true",
 			"suffix":  randID,
